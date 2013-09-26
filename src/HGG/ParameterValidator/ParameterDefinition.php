@@ -12,21 +12,28 @@ use HGG\ParameterValidator\Parameter\Parameter;
 class ParameterDefinition
 {
     /**
-     * definitions
+     * Array of parameter objects that make up the definition
      *
      * @var mixed
      * @access protected
      */
     protected $definitions = array();
 
+    /**
+     * List of required parameters
+     *
+     * @var array
+     * @access protected
+     */
     protected $required = array();
 
     /**
-     * addParameter
+     * Add a new parameter object to the definition
      *
      * @param Parameter $parameter
      * @access public
-     * @return void
+     *
+     * @return $this
      */
     public function addParameter(Parameter $parameter)
     {
@@ -43,16 +50,24 @@ class ParameterDefinition
         return $this;
     }
 
+    /**
+     * Gets a list of required parameters
+     *
+     * @access public
+     *
+     * @return array
+     */
     public function getRequiredParameterNames()
     {
         return $this->required;
     }
 
     /**
-     * getDefinitions
+     * Gets all the loaded definitions (Parameter objects)
      *
      * @access public
-     * @return void
+     *
+     * @return array
      */
     public function getDefinitions()
     {
