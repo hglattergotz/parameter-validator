@@ -39,6 +39,7 @@ class Input
      * @param mixed $request
      * @param ParameterDefinition $definition
      * @access public
+     *
      * @return void
      */
     public function __construct($parameters, ParameterDefinition $definition)
@@ -49,10 +50,11 @@ class Input
     }
 
     /**
-     * getParameters
+     * Return the array of parsed parameters
      *
      * @access public
-     * @return void
+     *
+     * @return array
      */
     public function getParameters()
     {
@@ -60,10 +62,12 @@ class Input
     }
 
     /**
-     * parse
+     * Parse the passed in parameters and ensure that they conform to the
+     * definition
      *
      * @param array $definitions
      * @access protected
+     *
      * @return void
      */
     protected function parse(array $definitions)
@@ -85,9 +89,12 @@ class Input
     }
 
     /**
-     * handleUndefinedParameters
+     * Throw an exception if a parameter that is not in the definition was
+     * passed in the parameter array
      *
      * @access private
+     * @throw Exception
+     *
      * @return void
      */
     private function handleUndefinedParameters()
@@ -106,9 +113,11 @@ class Input
     }
 
     /**
-     * handleMissingRequiredParameters
+     * Throw an exception if a required parameter is missing
      *
      * @access private
+     * @throw Exception
+     *
      * @return void
      */
     private function handleMissingRequiredParameters()
@@ -127,12 +136,14 @@ class Input
     }
 
     /**
-     * validateValue
+     * Run the value through the configured validator
      *
      * @param mixed $value
-     * @param mixed $definition
+     * @param Parameter $definition
      * @access protected
-     * @return void
+     * @throw Exception
+     *
+     * @return mixed
      */
     protected function validateValue($value, $definition)
     {
