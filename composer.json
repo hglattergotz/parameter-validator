@@ -16,7 +16,7 @@
         "php": ">=5.3.3"
     },
     "autoload": {
-        "psr-0": { "HGG\\UrlQueryStringHelper\\": "src/" }
+        "psr-0": { "HGG\\ParameterValidator\\": "src/" }
     },
     "minimum-stability": "dev"
 }
