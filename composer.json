@@ -1,0 +1,22 @@
+{
+    "name": "hgg/parameter-validator",
+    "type": "library",
+    "description": "Framework for specifying and enforcing rules on key/value pairs",
+    "keywords": [ "validator", "parameters", "http", "query string" ],
+    "homepage": "http://github.com/hglattergotz/parameter-validator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Henning Glatter-Götz",
+            "email": "henning@glatter-gotz.com",
+            "homepage": "http://glatter-gotz.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": { "HGG\\UrlQueryStringHelper\\": "src/" }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./tests/bootstrap.php"
+         colors="true">
+    <testsuites>
+        <testsuite name="ParameterValidator Test Suite">
+            <directory suffix="Test.php">./tests/HGG/ParameterValidator/Test/</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/HGG/ParameterValidator/</directory>
+        </whitelist>
+    </filter>
+</phpunit>
