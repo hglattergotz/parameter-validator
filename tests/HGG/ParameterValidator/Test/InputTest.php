@@ -6,7 +6,7 @@ use HGG\ParameterValidator\Parameter\Parameter;
 use HGG\ParameterValidator\Parameter\NumberParameter;
 use HGG\ParameterValidator\Parameter\TextParameter;
 use HGG\ParameterValidator\Parameter\DateParameter;
-use HGG\ParameterValidator\Parameter\DateTimeParameter;
+use HGG\ParameterValidator\Parameter\DatetimeParameter;
 use HGG\ParameterValidator\Parameter\BooleanParameter;
 use HGG\ParameterValidator\ParameterDefinition;
 use HGG\ParameterValidator\Input;
