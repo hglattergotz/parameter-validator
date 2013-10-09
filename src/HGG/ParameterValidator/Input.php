@@ -141,12 +141,20 @@ class Input
      * @param mixed $value
      * @param Parameter $definition
      * @access protected
+     *
      * @throw Exception
      *
      * @return mixed
      */
     protected function validateValue($value, $definition)
     {
-        return $definition->getValidator()->validate($value);
+        try
+        {
+            return $definition->getValidator()->validate($value);
+        }
+        catch (\Exception $e)
+        {
+            throw new \Exception(sprintf('[%s] %s', $definition->getName(), $e->getMessage()));
+        }
     }
 }
