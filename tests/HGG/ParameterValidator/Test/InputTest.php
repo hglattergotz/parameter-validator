@@ -168,5 +168,87 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('Exception');
         $input = new Input($parameters, $this->def);
     }
+
+    /**
+     * @dataProvider allTrueBooleanDataProvider
+     */
+    public function testAllTrueBooleanPrameterValues($parameters)
+    {
+        $expected = array(
+            'req-num'      => 1234,
+            'opt-txt'      => 'Some text value',
+            'opt-date'     => '2000-01-01',
+            'opt-datetime' => '2000-01-01 23:00:00',
+            'opt-bool'     => true
+        );
+
+        $input = new Input($parameters, $this->def);
+        $result = $input->getParameters();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function allTrueBooleanDataProvider()
+    {
+        $data = array(
+                'req-num'      => 1234,
+                'opt-txt'      => 'Some text value',
+                'opt-date'     => '2000-01-01',
+                'opt-datetime' => '2000-01-01 23:00:00',
+                'opt-bool'     => true
+            );
+
+        $allBools = array(true, 'true', 'yes', 'on', '1', 1);
+
+        $result = array();
+
+        foreach ($allBools as $boolVal) {
+            $data['opt-bool'] = $boolVal;
+            $result[] = array($data);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @dataProvider allFalseBooleanDataProvider
+     */
+    public function testAllFalseBooleanPrameterValues($parameters)
+    {
+        $expected = array(
+            'req-num'      => 1234,
+            'opt-txt'      => 'Some text value',
+            'opt-date'     => '2000-01-01',
+            'opt-datetime' => '2000-01-01 23:00:00',
+            'opt-bool'     => false
+        );
+
+        $input = new Input($parameters, $this->def);
+        $result = $input->getParameters();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function allFalseBooleanDataProvider()
+    {
+        $data = array(
+                'req-num'      => 1234,
+                'opt-txt'      => 'Some text value',
+                'opt-date'     => '2000-01-01',
+                'opt-datetime' => '2000-01-01 23:00:00',
+                'opt-bool'     => false
+            );
+
+        $allBools = array(false, "false", 'no', '0', 0);
+
+        $result = array();
+
+        foreach ($allBools as $boolVal) {
+            $data['opt-bool'] = $boolVal;
+            $result[] = array($data);
+        }
+
+        return $result;
+    }
 }
 
