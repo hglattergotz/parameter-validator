@@ -23,7 +23,7 @@ class Input
      * @var mixed
      * @access protected
      */
-    protected $parsedParams;
+    protected $parsedParams = array();
 
     /**
      * requiredParams
