@@ -46,7 +46,7 @@ class ArrayValidator
         $extra = array_diff($actualOptional, $optional);
 
         if (0 < count($extra) && !$allowUnspecified) {
-            $msg = 'The paramete%s %s %s not valid.';
+            $msg = 'The parameter%s %s %s not valid.';
             $singular = (1 === count($extra)) ? true : false;
             $keyString = implode(', ', $extra);
 
