@@ -1,6 +1,9 @@
 Framework for specifying and enforcing rules on key/value pairs
 
-[![Build Status](https://travis-ci.org/hglattergotz/parameter-validator.png)](https://travis-ci.org/hglattergotz/parameter-validator)
+[![Build Status](https://travis-ci.org/hglattergotz/parameter-validator.svg)](https://travis-ci.org/hglattergotz/parameter-validator)
+[![Latest Stable Version](https://poser.pugx.org/hgg/parameter-validator/v/stable.svg)](https://packagist.org/packages/hgg/parameter-validator)
+[![Total Downloads](https://poser.pugx.org/hgg/parameter-validator/downloads.svg)](https://packagist.org/packages/hgg/parameter-validator)
+[![License](https://poser.pugx.org/hgg/parameter-validator/license.svg)](https://packagist.org/packages/hgg/parameter-validator)
 
 ## Installation
 
