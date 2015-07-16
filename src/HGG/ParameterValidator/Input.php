@@ -105,7 +105,7 @@ class Input
             if (1 == $leftover) {
                 $msg = 'The parameter \'%s\' is not valid';
             } else {
-                $msg = 'The parameters \'%s\' are not valied';
+                $msg = 'The parameters \'%s\' are not valid';
             }
 
             throw new \Exception(sprintf($msg, implode('\', \'', array_keys($this->rawParams))));
