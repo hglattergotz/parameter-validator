@@ -83,17 +83,17 @@ class InputTest extends \PHPUnit_Framework_TestCase
 
     public function testParameterGetters()
     {
-      $numberParameter = new NumberParameter(
-          'req-num',
-          Parameter::REQUIRED,
-          'This is a required numeric parameter',
-          'Some more details could go here',
-          'RandomValidatorClass'
-      );
+        $numberParameter = new NumberParameter(
+            'req-num',
+            Parameter::REQUIRED,
+            'This is a required numeric parameter',
+            'Some more details could go here',
+            'RandomValidatorClass'
+        );
 
-      $this->assertEquals('This is a required numeric parameter', $numberParameter->getSummary());
-      $this->assertEquals('Some more details could go here', $numberParameter->getDescription());
-      $this->assertEquals('RandomValidatorClass', $numberParameter->getValidator());
+        $this->assertEquals('This is a required numeric parameter', $numberParameter->getSummary());
+        $this->assertEquals('Some more details could go here', $numberParameter->getDescription());
+        $this->assertEquals('RandomValidatorClass', $numberParameter->getValidator());
     }
 
     public function testSunnyDay()
@@ -145,20 +145,20 @@ class InputTest extends \PHPUnit_Framework_TestCase
      */
     public function testOmitRequiredParameters()
     {
-      $def = $this->def->addParameter(
-          new NumberParameter(
-              'req-num-2',
-              Parameter::REQUIRED,
-              'This is a required numeric parameter',
-              'Some more details could go here'
-          )
-      );
+        $def = $this->def->addParameter(
+            new NumberParameter(
+                'req-num-2',
+                Parameter::REQUIRED,
+                'This is a required numeric parameter',
+                'Some more details could go here'
+            )
+        );
 
-      $parameters = array(
-          'opt-txt' => 'Some text value'
-      );
+        $parameters = array(
+            'opt-txt' => 'Some text value'
+        );
 
-      $input = new Input($parameters, $this->def);
+        $input = new Input($parameters, $this->def);
     }
 
     /**
