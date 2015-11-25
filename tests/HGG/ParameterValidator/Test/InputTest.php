@@ -64,6 +64,38 @@ class InputTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {}
 
+    /**
+     * @expectedException        Exception
+     * @expectedExceptionMessage Parameter with name 'req-num' already exists!
+     */
+    public function testParamterAlreadyExists()
+    {
+        $def = $this->def
+                    ->addParameter(
+                        new NumberParameter(
+                            'req-num',
+                            Parameter::REQUIRED,
+                            'This is a required numeric parameter',
+                            'Some more details could go here'
+                        )
+                    );
+    }
+
+    public function testParameterGetters()
+    {
+      $numberParameter = new NumberParameter(
+          'req-num',
+          Parameter::REQUIRED,
+          'This is a required numeric parameter',
+          'Some more details could go here',
+          'RandomValidatorClass'
+      );
+
+      $this->assertEquals('This is a required numeric parameter', $numberParameter->getSummary());
+      $this->assertEquals('Some more details could go here', $numberParameter->getDescription());
+      $this->assertEquals('RandomValidatorClass', $numberParameter->getValidator());
+    }
+
     public function testSunnyDay()
     {
         $parameters = array(
@@ -94,16 +126,45 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @expectedException        Exception
+     * @expectedExceptionMessage The required parameter 'req-num' is missing
+     */
     public function testOmitRequiredParameter()
     {
         $parameters = array(
             'opt-txt' => 'Some text value'
         );
 
-        $this->setExpectedException('Exception');
         $input = new Input($parameters, $this->def);
     }
 
+    /**
+     * @expectedException        Exception
+     * @expectedExceptionMessage The required parameters 'req-num', 'req-num-2' are missing
+     */
+    public function testOmitRequiredParameters()
+    {
+      $def = $this->def->addParameter(
+          new NumberParameter(
+              'req-num-2',
+              Parameter::REQUIRED,
+              'This is a required numeric parameter',
+              'Some more details could go here'
+          )
+      );
+
+      $parameters = array(
+          'opt-txt' => 'Some text value'
+      );
+
+      $input = new Input($parameters, $this->def);
+    }
+
+    /**
+     * @expectedException        Exception
+     * @expectedExceptionMessage The parameter 'not-defined' is not valid
+     */
     public function testAddUndefinedParameter()
     {
         $parameters = array(
@@ -111,7 +172,22 @@ class InputTest extends \PHPUnit_Framework_TestCase
             'not-defined' => 12
         );
 
-        $this->setExpectedException('Exception');
+        $input = new Input($parameters, $this->def);
+    }
+
+    /**
+     * @expectedException        Exception
+     * @expectedExceptionMessage The parameters 'not-defined', 'not-defined-2', 'not-defined-3' are not valid
+     */
+    public function testAddUndefinedParameters()
+    {
+        $parameters = array(
+            'req-num'     => 1234,
+            'not-defined' => 12,
+            'not-defined-2' => 12,
+            'not-defined-3' => 12
+        );
+
         $input = new Input($parameters, $this->def);
     }
 
@@ -251,4 +327,3 @@ class InputTest extends \PHPUnit_Framework_TestCase
         return $result;
     }
 }
-
