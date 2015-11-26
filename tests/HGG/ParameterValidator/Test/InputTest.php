@@ -5,16 +5,34 @@ namespace HGG\ParameterValidator\Test;
 use HGG\ParameterValidator\Parameter\Parameter;
 use HGG\ParameterValidator\Parameter\NumberParameter;
 use HGG\ParameterValidator\Parameter\TextParameter;
+use HGG\ParameterValidator\Parameter\TextArrayParameter;
 use HGG\ParameterValidator\Parameter\DateParameter;
 use HGG\ParameterValidator\Parameter\DatetimeParameter;
 use HGG\ParameterValidator\Parameter\BooleanParameter;
 use HGG\ParameterValidator\ParameterDefinition;
 use HGG\ParameterValidator\Input;
 
+/**
+ * InputTest
+ *
+ * @author Henning Glatter-Götz <henning@glatter-gotz.com>
+ */
 class InputTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * def
+     *
+     * @var mixed
+     * @access protected
+     */
     protected $def;
 
+    /**
+     * setUp
+     *
+     * @access protected
+     * @return void
+     */
     protected function setUp()
     {
         $this->def = new ParameterDefinition();
@@ -32,6 +50,14 @@ class InputTest extends \PHPUnit_Framework_TestCase
                     'opt-txt',
                     Parameter::OPTIONAL,
                     'This is an optional text parameter',
+                    'Some more details could go here'
+                )
+            )
+            ->addParameter(
+                new TextParameter(
+                    'opt-txt-array',
+                    Parameter::OPTIONAL,
+                    'This is an optional text array parameter',
                     'Some more details could go here'
                 )
             )
@@ -61,12 +87,23 @@ class InputTest extends \PHPUnit_Framework_TestCase
             );
     }
 
+    /**
+     * tearDown
+     *
+     * @access protected
+     * @return void
+     */
     protected function tearDown()
     {}
 
     /**
+     * testParamterAlreadyExists
+     *
      * @expectedException        Exception
      * @expectedExceptionMessage Parameter with name 'req-num' already exists!
+     *
+     * @access public
+     * @return void
      */
     public function testParamterAlreadyExists()
     {
@@ -81,6 +118,12 @@ class InputTest extends \PHPUnit_Framework_TestCase
                     );
     }
 
+    /**
+     * testParameterGetters
+     *
+     * @access public
+     * @return void
+     */
     public function testParameterGetters()
     {
         $numberParameter = new NumberParameter(
@@ -96,14 +139,21 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('RandomValidatorClass', $numberParameter->getValidator());
     }
 
+    /**
+     * testSunnyDay
+     *
+     * @access public
+     * @return void
+     */
     public function testSunnyDay()
     {
         $parameters = array(
-            'req-num'      => 1234,
-            'opt-txt'      => 'Some text value',
-            'opt-date'     => '2000-01-01',
-            'opt-datetime' => '2000-01-01 23:00:00',
-            'opt-bool'     => true
+            'req-num'       => 1234,
+            'opt-txt'       => 'Some text value',
+            'opt-txt-array' => array('type' => 'Some text value on index 0'),
+            'opt-date'      => '2000-01-01',
+            'opt-datetime'  => '2000-01-01 23:00:00',
+            'opt-bool'      => true
         );
 
         $input = new Input($parameters, $this->def);
@@ -113,6 +163,12 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * testOmitOptionalParameter
+     *
+     * @access public
+     * @return void
+     */
     public function testOmitOptionalParameter()
     {
         $parameters = array(
@@ -127,8 +183,13 @@ class InputTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * testOmitRequiredParameter
+     *
      * @expectedException        Exception
      * @expectedExceptionMessage The required parameter 'req-num' is missing
+     *
+     * @access public
+     * @return void
      */
     public function testOmitRequiredParameter()
     {
@@ -140,8 +201,13 @@ class InputTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * testOmitRequiredParameters
+     *
      * @expectedException        Exception
      * @expectedExceptionMessage The required parameters 'req-num', 'req-num-2' are missing
+     *
+     * @access public
+     * @return void
      */
     public function testOmitRequiredParameters()
     {
@@ -162,8 +228,13 @@ class InputTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * testAddUndefinedParameter
+     *
      * @expectedException        Exception
      * @expectedExceptionMessage The parameter 'not-defined' is not valid
+     *
+     * @access public
+     * @return void
      */
     public function testAddUndefinedParameter()
     {
@@ -176,8 +247,13 @@ class InputTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * testAddUndefinedParameters
+     *
      * @expectedException        Exception
      * @expectedExceptionMessage The parameters 'not-defined', 'not-defined-2', 'not-defined-3' are not valid
+     *
+     * @access public
+     * @return void
      */
     public function testAddUndefinedParameters()
     {
@@ -191,16 +267,31 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $input = new Input($parameters, $this->def);
     }
 
+    /**
+     * testIncorrectParameterTypeNumber
+     *
+     * @expectedException Exception
+     *
+     * @access public
+     * @return void
+     */
     public function testIncorrectParameterTypeNumber()
     {
         $parameters = array(
             'req-num' => 'this-is-not-a-number'
         );
 
-        $this->setExpectedException('Exception');
         $input = new Input($parameters, $this->def);
     }
 
+    /**
+     * testIncorrectParameterTypeText
+     *
+     * @expectedException Exception
+     *
+     * @access public
+     * @return void
+     */
     public function testIncorrectParameterTypeText()
     {
         $parameters = array(
@@ -208,10 +299,17 @@ class InputTest extends \PHPUnit_Framework_TestCase
             'opt-txt' => true
         );
 
-        $this->setExpectedException('Exception');
         $input = new Input($parameters, $this->def);
     }
 
+    /**
+     * testIncorrectParameterTypeDate
+     *
+     * @expectedException Exception
+     *
+     * @access public
+     * @return void
+     */
     public function testIncorrectParameterTypeDate()
     {
         $parameters = array(
@@ -219,10 +317,17 @@ class InputTest extends \PHPUnit_Framework_TestCase
             'opt-date' => 'this is not a date'
         );
 
-        $this->setExpectedException('Exception');
         $input = new Input($parameters, $this->def);
     }
 
+    /**
+     * testIncorrectParameterTypeDateTime
+     *
+     * @expectedException Exception
+     *
+     * @access public
+     * @return void
+     */
     public function testIncorrectParameterTypeDateTime()
     {
         $parameters = array(
@@ -230,10 +335,17 @@ class InputTest extends \PHPUnit_Framework_TestCase
             'opt-datetime' => 'this is not a datetime'
         );
 
-        $this->setExpectedException('Exception');
         $input = new Input($parameters, $this->def);
     }
 
+    /**
+     * testIncorrectParameterTypeBoolean
+     *
+     * @expectedException Exception
+     *
+     * @access public
+     * @return void
+     */
     public function testIncorrectParameterTypeBoolean()
     {
         $parameters = array(
@@ -241,12 +353,17 @@ class InputTest extends \PHPUnit_Framework_TestCase
             'opt-bool' => 'this is not a boolean'
         );
 
-        $this->setExpectedException('Exception');
         $input = new Input($parameters, $this->def);
     }
 
     /**
+     * testAllTrueBooleanPrameterValues
+     *
      * @dataProvider allTrueBooleanDataProvider
+     *
+     * @param mixed $parameters
+     * @access public
+     * @return void
      */
     public function testAllTrueBooleanPrameterValues($parameters)
     {
@@ -264,6 +381,12 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * allTrueBooleanDataProvider
+     *
+     * @access public
+     * @return void
+     */
     public function allTrueBooleanDataProvider()
     {
         $data = array(
@@ -287,7 +410,13 @@ class InputTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * testAllFalseBooleanPrameterValues
+     *
      * @dataProvider allFalseBooleanDataProvider
+     *
+     * @param mixed $parameters
+     * @access public
+     * @return void
      */
     public function testAllFalseBooleanPrameterValues($parameters)
     {
@@ -305,6 +434,12 @@ class InputTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * allFalseBooleanDataProvider
+     *
+     * @access public
+     * @return void
+     */
     public function allFalseBooleanDataProvider()
     {
         $data = array(

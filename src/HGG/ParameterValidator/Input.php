@@ -74,7 +74,16 @@ class Input
     {
         foreach ($this->rawParams as $rKey => $rVal) {
             if (array_key_exists($rKey, $definitions)) {
-                $value = $this->validateValue($rVal, $definitions[$rKey]);
+                if (is_array($rVal)) {
+                    $value = [];
+
+                    foreach ($rVal as $key => $val) {
+                        $value[$key] = $this->validateValue($val, $definitions[$rKey]);
+                    }
+                } else {
+                    $value = $this->validateValue($rVal, $definitions[$rKey]);
+                }
+
                 $this->parsedParams[$rKey] = $value;
                 unset($this->rawParams[$rKey]);
 
@@ -148,12 +157,9 @@ class Input
      */
     protected function validateValue($value, $definition)
     {
-        try
-        {
+        try {
             return $definition->getValidator()->validate($value);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             throw new \Exception(sprintf('[%s] %s', $definition->getName(), $e->getMessage()));
         }
     }
