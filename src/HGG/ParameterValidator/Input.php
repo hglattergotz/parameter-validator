@@ -75,7 +75,7 @@ class Input
         foreach ($this->rawParams as $rKey => $rVal) {
             if (array_key_exists($rKey, $definitions)) {
                 if (is_array($rVal)) {
-                    $value = [];
+                    $value = array();
 
                     foreach ($rVal as $key => $val) {
                         $value[$key] = $this->validateValue($val, $definitions[$rKey]);
